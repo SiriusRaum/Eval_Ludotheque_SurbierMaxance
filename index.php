@@ -28,10 +28,15 @@ if (isset($_SESSION['id'])){
 }
 
 
+}else{
+    echo "Vous devez être connecté pour accéder au catalogue.";
+
 }
 
 include('includes/header.php');
 ?>
+<?php if(isset($_SESSION['id'])) { ?>
+
 <main>
     <h1>Liste de jeux</h1>
     <?php foreach ($jeux as $jeu) : ?>
@@ -48,4 +53,4 @@ include('includes/header.php');
     
     <?php endforeach; ?>
     </main>
-<?php include('includes/footer.php'); ?>
+<?php } include('includes/footer.php'); ?>
