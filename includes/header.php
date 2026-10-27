@@ -26,6 +26,7 @@
         <li><a href="../index.php">Accueil</a></li>
         <li><a href="../ajout-jeu.php">Ajout Jeu</a></li>
         <li><a href="../deconnexion.php">Déconnexion</a></li>
+        <?= "<li>Bonjour {$_SESSION['prenom']} {$_SESSION['nom']}</li>" ?>
         
     </ul>
 </nav>
