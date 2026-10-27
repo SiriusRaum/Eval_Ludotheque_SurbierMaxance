@@ -7,6 +7,9 @@
     <title>Header</title>
     <link rel="stylesheet" href="../src/css/style.css">
 </head>
+        <?php 
+            if(!isset($_SESSION['id'])){
+        ?>
 <body>
     <header>
 <nav>
@@ -16,4 +19,16 @@
         <li><a href="../connexion.php" >Connexion</a></li>
     </ul>
 </nav>
+<?php } 
+    else { ?>
+        <nav>
+        <ul>
+        <li><a href="../index.php">Accueil</a></li>
+        <li><a href="../ajout-jeu.php">Ajout Jeu</a></li>
+        <li><a href="../deconnexion.php">Déconnexion</a></li>
+        
+    </ul>
+</nav>
+
+<?php  } ?>
     </header>
