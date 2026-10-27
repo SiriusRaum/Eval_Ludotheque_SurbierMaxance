@@ -1,6 +1,51 @@
 <?php
 session_start();
-include('includes/header.php');
+$jeux = [''];
+require_once('utils/utils.php');
+if (isset($_SESSION['id'])){
+    $pdo = new PDO('mysql:host=localhost;dbname=ludotheque','root','root',
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+        try{
 
-include('includes/footer.php');
+    $request = $pdo->prepare("SELECT j.id_jeu, j.titre , j.joueurs_min, j.joueurs_max, j.duree, c.nom_categorie, m.prenom FROM jeu j
+        INNER JOIN membre m ON m.id_membre = j.id_membre
+        INNER JOIN categorie c ON c.id_categorie = j.id_categorie
+        ORDER BY j.titre ASC");
+
+    $request->execute();
+
+    $jeux = $request->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+}catch(EXCEPTION $error){
+
+    die($error->getMessage());
+
+
+}
+
+
+}
+
+include('includes/header.php');
 ?>
+<main>
+    <h1>Liste de jeux</h1>
+    <?php foreach ($jeux as $jeu) : ?>
+        <article>
+            <h2>
+                <?= $jeu['titre'] ?>
+                <?= $jeu['nom_categorie'] ?>
+
+    </h2>
+                <p> joueurs : <?= formatJoueurs($jeu['joueurs_min'], $jeu['joueurs_max']) ;?> </p>
+                <p> Durée : <?= categorieDuree($jeu['duree']); ?> </p>
+                <p> Ajouté par : <?= $jeu['prenom']; ?> </p>
+    </article>
+    
+    <?php endforeach; ?>
+    </main>
+<?php include('includes/footer.php'); ?>
